@@ -8,42 +8,56 @@ $VERSION = '1.04';
 
 use Moose;
 
+has env => (
+  is      => 'ro',
+  isa     => 'HashRef',
+  default => sub { { } },
+);
+
+has sanctify => (
+  is      => 'ro',
+  isa     => 'ArrayRef',
+  default => sub { [ ] },
+);
+
+has _backup => (
+  is      => 'ro',
+  isa     => 'HashRef',
+  default => sub { { } },
+);
+
+has _restored => (
+  is      => 'rw',
+  isa	  => 'Bool',
+  default => 0,
+);
+
 sub sanctify {
-  my $package = shift;
-  my %opts = @_;
-  $opts{lc $_} = delete $opts{$_} for keys %opts;
-  delete $opts{env} unless $opts{env} and ref $opts{env} eq 'HASH';
-  delete $opts{sanctify} unless $opts{sanctify} and ref $opts{sanctify} eq 'ARRAY';
-  my $self = bless \%opts, $package;
-  $self->_sanctify();
+  my $self = shift->new( @_ );
+  $self->_sanctify;
   return $self;
 }
 
 sub _sanctify {
   my $self = shift;
-  $self->{_backup} = { };
-  if ( $self->{sanctify} ) {
-     foreach my $regex ( @{ $self->{sanctify} } ) { 
-	$self->{_backup}->{$_} = delete $ENV{$_} for grep { eval { /$regex/ } } keys %ENV;
-     }
+  foreach my $regex ( @{ $self->sanctify } ) { 
+    $self->_backup->{$_} = delete $ENV{$_} for grep { eval { /$regex/ } } keys %ENV;
   }
-  if ( $self->{env} ) {
-     $self->{_backup}->{$_} = delete $ENV{$_} for grep { defined $ENV{$_} } keys %{ $self->{env} };
-     $ENV{$_} = $self->{env}->{$_} for keys %{ $self->{env} };
-  }
+  $self->_backup->{$_} = delete $ENV{$_} for grep { defined $ENV{$_} } keys %{ $self->env };
+  $ENV{$_} = $self->env->{$_} for keys %{ $self->env };
   return 1;
 }
 
 sub restore {
   my $self = shift;
-  delete $ENV{$_} for keys %{ $self->{env} };
-  $ENV{$_} = $self->{_backup}->{$_} for keys %{ $self->{_backup} };
-  return $self->{_restored} = 1;
+  delete $ENV{$_} for keys %{ $self->env };
+  $ENV{$_} = $self->_backup->{$_} for keys %{ $self->_backup };
+  return $self->_restored(1);
 }
 
-sub DESTROY {
+sub DEMOLISH {
   my $self = shift;
-  $self->restore unless $self->{_restored};
+  $self->restore unless $self->_restored;
 }
 
 no Moose;
