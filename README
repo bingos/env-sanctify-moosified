@@ -1,8 +1,8 @@
 NAME
-    Env::Sanctify - Lexically scoped sanctification of %ENV
+    Env::Sanctify::Moosified - Lexically scoped sanctification of %ENV
 
 SYNOPSIS
-      my $sanctify = Env::Sanctify->sanctify( sanctify => [ '^POE' ] );
+      my $sanctify = Env::Sanctify::Moosified->sanctify( sanctify => [ '^POE' ] );
 
       # do some stuff, fork some processes etc.
 
@@ -10,7 +10,7 @@ SYNOPSIS
 
       { 
 
-        my $sanctify = Env::Sanctify->sanctify( env => { POE_TRACE_DEFAULT => 1 } );
+        my $sanctify = Env::Sanctify::Moosified->sanctify( env => { POE_TRACE_DEFAULT => 1 } );
 
         # do some stuff, fork some processes etc.
       }
@@ -18,8 +18,8 @@ SYNOPSIS
       # out of scope, %ENV is back to normal
 
 DESCRIPTION
-    Env::Sanctify is a module that provides lexically scoped manipulation
-    and sanctification of %ENV.
+    Env::Sanctify::Moosified is a module that provides lexically scoped
+    manipulation and sanctification of %ENV.
 
     You can specify that it alter or add additional environment variables or
     remove existing ones according to a list of matching regexen.

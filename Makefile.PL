@@ -4,6 +4,7 @@ name 'Env-Sanctify-Moosified';
 author 'Chris Williams <chris@bingosnet.co.uk>';
 version_from 'lib/Env/Sanctify/Moosified.pm';
 abstract_from 'lib/Env/Sanctify/Moosified.pm';
+readme_from 'lib/Env/Sanctify/Moosified.pm';
 license 'perl';
 auto_license holder => 'Chris Williams';
 perl_version '5.006';
