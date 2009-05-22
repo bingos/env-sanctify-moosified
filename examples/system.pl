@@ -2,10 +2,5 @@ use strict;
 use warnings;
 use Env::Sanctify::Moosified;
 
-my $sanctified = { PATH => $ENV{PATH} };
-
-{ 
-  my $sanctify = Env::Sanctify::Moosified->sanctify( env => $sanctified, sanctify => [ '.*' ] );
-
-  system("$^X " . '-MData::Dumper -e \'warn Dumper(\%ENV);\'');
-}
+my $sanctify = Env::Sanctify::Moosified->consecrate( sanctify => [ '.*' ], env => { PATH => $ENV{PATH} }, );
+system("$^X " . '-MData::Dumper -e \'warn Dumper(\%ENV);\'');

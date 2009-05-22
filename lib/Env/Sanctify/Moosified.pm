@@ -32,7 +32,7 @@ has _restored => (
   default => 0,
 );
 
-sub sanctify {
+sub consecrate {
   my $self = shift->new( @_ );
   $self->_sanctify;
   return $self;
@@ -73,7 +73,7 @@ Env::Sanctify::Moosified - Lexically scoped sanctification of %ENV
 
 =head1 SYNOPSIS
 
-  my $sanctify = Env::Sanctify::Moosified->sanctify( sanctify => [ '^POE' ] );
+  my $sanctify = Env::Sanctify::Moosified->consecrate( sanctify => [ '^POE' ] );
 
   # do some stuff, fork some processes etc.
 
@@ -81,7 +81,7 @@ Env::Sanctify::Moosified - Lexically scoped sanctification of %ENV
 
   { 
 
-    my $sanctify = Env::Sanctify::Moosified->sanctify( env => { POE_TRACE_DEFAULT => 1 } );
+    my $sanctify = Env::Sanctify::Moosified->consecrate( env => { POE_TRACE_DEFAULT => 1 } );
 
     # do some stuff, fork some processes etc.
   }
@@ -105,9 +105,9 @@ Useful for manipulating the environment that forked processes and sub-processes 
 
 =over
 
-=item C<sanctify>
+=item C<consecrate>
 
-Creates an Env::Sanctify object. Takes two optional arguments:
+Creates an Env::Sanctify::Moosified object. Takes two optional arguments:
 
   'env', a hashref of env vars to add to %ENV;
   'sanctify', an arrayref of regex pattern strings to match against current %ENV vars;

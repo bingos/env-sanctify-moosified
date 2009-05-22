@@ -2,7 +2,7 @@ NAME
     Env::Sanctify::Moosified - Lexically scoped sanctification of %ENV
 
 SYNOPSIS
-      my $sanctify = Env::Sanctify::Moosified->sanctify( sanctify => [ '^POE' ] );
+      my $sanctify = Env::Sanctify::Moosified->consecrate( sanctify => [ '^POE' ] );
 
       # do some stuff, fork some processes etc.
 
@@ -10,7 +10,7 @@ SYNOPSIS
 
       { 
 
-        my $sanctify = Env::Sanctify::Moosified->sanctify( env => { POE_TRACE_DEFAULT => 1 } );
+        my $sanctify = Env::Sanctify::Moosified->consecrate( env => { POE_TRACE_DEFAULT => 1 } );
 
         # do some stuff, fork some processes etc.
       }
@@ -31,8 +31,9 @@ DESCRIPTION
     sub-processes will inherit.
 
 CONSTRUCTOR
-    "sanctify"
-        Creates an Env::Sanctify object. Takes two optional arguments:
+    "consecrate"
+        Creates an Env::Sanctify::Moosified object. Takes two optional
+        arguments:
 
           'env', a hashref of env vars to add to %ENV;
           'sanctify', an arrayref of regex pattern strings to match against current %ENV vars;

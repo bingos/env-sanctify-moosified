@@ -1,2 +1,2 @@
 use Test::More tests => 1;
-BEGIN { use_ok('Env::Sanctify') };
+BEGIN { use_ok('Env::Sanctify::Moosified') };

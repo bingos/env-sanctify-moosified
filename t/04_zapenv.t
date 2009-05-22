@@ -1,11 +1,11 @@
 use strict;
 use warnings;
 use Test::More tests => 2;
-use Env::Sanctify;
+use Env::Sanctify::Moosified;
 
 my $save = scalar keys %ENV;
 
-my $sanctify = Env::Sanctify->sanctify( 
+my $sanctify = Env::Sanctify::Moosified->consecrate( 
 		sanctify => [ '.*' ], 
 );
 

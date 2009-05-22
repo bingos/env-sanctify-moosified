@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use Test::More tests => 8;
-use Env::Sanctify;
+use Env::Sanctify::Moosified;
 
 $ENV{SANCTIFY_REGEX_TEST} = 'Sanctify this';
 $ENV{SANCTIFY_ADDITIONAL_TEST} = 'Sanctify this';
@@ -9,7 +9,7 @@ $ENV{SANCTIFY_RESTORE_TEST} = 'moocow';
 delete $ENV{SANCTIFY_NO_VAR};
 
 {
-  my $sanctify = Env::Sanctify->sanctify( 
+  my $sanctify = Env::Sanctify::Moosified->consecrate( 
 		sanctify => [ '^SANCTIFY_REGEX_TEST', '^SANCTIFY_ADDITIONAL' ], 
 		env => { SANCTIFY_RESTORE_TEST => 'pigdog',
 			 SANCTIFY_NO_VAR => 'nothing to see',
