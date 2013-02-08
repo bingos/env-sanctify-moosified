@@ -8,7 +8,7 @@ SYNOPSIS
 
       $sanctify->restore
 
-      { 
+      {
 
         my $sanctify = Env::Sanctify::Moosified->consecrate( env => { POE_TRACE_DEFAULT => 1 } );
 
@@ -35,8 +35,12 @@ CONSTRUCTOR
         Creates an Env::Sanctify::Moosified object. Takes two optional
         arguments:
 
-          'env', a hashref of env vars to add to %ENV;
-          'sanctify', an arrayref of regex pattern strings to match against current %ENV vars;
+        "env"
+            A hashref of env vars to add to %ENV.
+
+        "sanctify"
+            An arrayref of regex pattern strings to match against current
+            %ENV vars;
 
         Any %ENV var that matches a "sanctify" regex is removed from the
         resultant %ENV.

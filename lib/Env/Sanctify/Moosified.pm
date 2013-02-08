@@ -6,7 +6,8 @@ use vars qw($VERSION);
 
 $VERSION = '1.04';
 
-use Moose;
+use Moo;
+use MooX::late;
 
 has env => (
   is      => 'ro',
@@ -40,7 +41,7 @@ sub consecrate {
 
 sub _sanctify {
   my $self = shift;
-  foreach my $regex ( @{ $self->sanctify } ) { 
+  foreach my $regex ( @{ $self->sanctify } ) {
     $self->_backup->{$_} = delete $ENV{$_} for grep { eval { /$regex/ } } keys %ENV;
   }
   $self->_backup->{$_} = delete $ENV{$_} for grep { defined $ENV{$_} } keys %{ $self->env };
@@ -60,7 +61,7 @@ sub DEMOLISH {
   $self->restore unless $self->_restored;
 }
 
-no Moose;
+no Moo;
 __PACKAGE__->meta->make_immutable;
 
 'Sanctify yourself, set yourself free';
@@ -79,7 +80,7 @@ Env::Sanctify::Moosified - Lexically scoped sanctification of %ENV
 
   $sanctify->restore
 
-  { 
+  {
 
     my $sanctify = Env::Sanctify::Moosified->consecrate( env => { POE_TRACE_DEFAULT => 1 } );
 
@@ -90,13 +91,13 @@ Env::Sanctify::Moosified - Lexically scoped sanctification of %ENV
 
 =head1 DESCRIPTION
 
-Env::Sanctify::Moosified is a module that provides lexically scoped manipulation and sanctification of 
+Env::Sanctify::Moosified is a module that provides lexically scoped manipulation and sanctification of
 C<%ENV>.
 
 You can specify that it alter or add additional environment variables or remove existing ones
 according to a list of matching regexen.
 
-You can then either C<restore> the environment back manually or let the object fall out of 
+You can then either C<restore> the environment back manually or let the object fall out of
 scope, which automagically restores.
 
 Useful for manipulating the environment that forked processes and sub-processes will inherit.
@@ -109,8 +110,17 @@ Useful for manipulating the environment that forked processes and sub-processes 
 
 Creates an Env::Sanctify::Moosified object. Takes two optional arguments:
 
-  'env', a hashref of env vars to add to %ENV;
-  'sanctify', an arrayref of regex pattern strings to match against current %ENV vars;
+=over
+
+=item C<env>
+
+A hashref of env vars to add to C<%ENV>.
+
+=item C<sanctify>
+
+An arrayref of regex pattern strings to match against current C<%ENV> vars;
+
+=back
 
 Any C<%ENV> var that matches a C<sanctify> regex is removed from the resultant C<%ENV>.
 
@@ -122,7 +132,7 @@ Any C<%ENV> var that matches a C<sanctify> regex is removed from the resultant C
 
 =item C<restore>
 
-Explicitly restore the previous C<%ENV>. This is called automagically when the object is C<DESTROY>ed, 
+Explicitly restore the previous C<%ENV>. This is called automagically when the object is C<DESTROY>ed,
 for instance, when it goes out of scope.
 
 =back
