@@ -1,10 +1,9 @@
 package Env::Sanctify::Moosified;
 
+#ABSTRACT: Lexically scoped sanctification of %ENV
+
 use strict;
 use warnings;
-use vars qw($VERSION);
-
-$VERSION = '1.04';
 
 use Moo;
 use MooX::late;
@@ -66,11 +65,13 @@ __PACKAGE__->meta->make_immutable;
 
 'Sanctify yourself, set yourself free';
 
-__END__
+=pod
 
-=head1 NAME
+=begin Pod::Coverage
 
-Env::Sanctify::Moosified - Lexically scoped sanctification of %ENV
+  DEMOLISH
+
+=end Pod::Coverage
 
 =head1 SYNOPSIS
 
@@ -136,15 +137,5 @@ Explicitly restore the previous C<%ENV>. This is called automagically when the o
 for instance, when it goes out of scope.
 
 =back
-
-=head1 AUTHOR
-
-Chris C<BinGOs> Williams <chris@bingosnet.co.uk>
-
-=head1 LICENSE
-
-Copyright E<copy> Chris Williams
-
-This module may be used, modified, and distributed under the same terms as Perl itself. Please see the license that came with your Perl distribution for details.
 
 =cut
